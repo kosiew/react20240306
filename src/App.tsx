@@ -1,28 +1,9 @@
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
-import { useState } from 'react';
 import './App.css';
+import { TextInput } from './component/TextInput';
 import logo from './logo_beventure.png';
 
 function App() {
-  const [inputValue, setInputValue] = useState('');
-  const [isEditable, setIsEditable] = useState(true);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleIconClick = () => {
-    setIsEditable(!isEditable);
-  };
-  const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      handleIconClick();
-    }
-  };
 
   return (
     <div className="App">
@@ -33,28 +14,8 @@ function App() {
       </AppBar>
       <h2>A really fast and easy tool to make decisions</h2>
 
-      {isEditable ? (
-        <TextField
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          placeholder="What's your question?"
-          InputProps={{
-            endAdornment: (
-              <IconButton onClick={handleIconClick}>
-                <AddIcon />
-              </IconButton>
-            ),
-          }}
-        />
-      ) : (
-        <div>
-          <span>{inputValue}</span>
-          <IconButton onClick={handleIconClick}>
-            <DeleteIcon />
-          </IconButton>
-        </div>
-      )}
+      <TextInput placeHolder="What is your question?" />
+
 
       <footer style={{
         position: 'fixed', left: 0,
