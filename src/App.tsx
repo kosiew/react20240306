@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import { AnswerSection } from './component/AnswerSection';
 import { ChoiceSection } from './component/ChoiceSection';
+import { HeadScript } from './component/HeadScript';
 import { InputCollector } from './component/InputCollector';
 import { LoadingText } from './component/LoadingText';
 import logo from './logo_beventure.png';
@@ -47,6 +48,7 @@ function App() {
 
   return (
     <div className="App">
+      <HeadScript />
       <AppBar position="static" style={{ backgroundColor: 'white' }
       }>
         <div>
