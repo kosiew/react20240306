@@ -8,15 +8,11 @@ interface InputCollectorProps {
   onInputsChange: (newInputs: string[]) => void;
 }
 
+export type InputState = 'ENTERING' | 'CONFIRMED' | 'INITIAL'
 export const InputCollector: React.FC<InputCollectorProps> = ({ placeholder, maxInputs, onInputsChange }) => {
   const [inputs, setInputs] = useState<string[]>(['']);
-  const [editStates, setEditStates] = useState<boolean[]>([true]);
 
-  const handleEditableChange = (isEditable: boolean, index: number) => {
-    const newEditStates = [...editStates];
-    newEditStates[index] = isEditable;
-    setEditStates(newEditStates);
-  };
+  const [inputState, setInputState] = useState<InputState>('INITIAL');
   const handleInputChange = (newValue: string, index: number) => {
     const newInputs = [...inputs];
     newInputs[index] = newValue;
@@ -27,6 +23,7 @@ export const InputCollector: React.FC<InputCollectorProps> = ({ placeholder, max
   const addInput = () => {
     if (maxInputs === undefined || inputs.length < maxInputs) {
       setInputs([...inputs, '']);
+      setInputState('INITIAL');
     }
   };
 
@@ -49,11 +46,11 @@ export const InputCollector: React.FC<InputCollectorProps> = ({ placeholder, max
           placeHolder={`${placeholder} ${index + 1}`}
           onInputChange={(newValue) => handleInputChange(newValue, index)}
           onDelete={inputs.length > 1 ? () => deleteInput(index) : undefined}
-          onEditableChange={(isEditable) => handleEditableChange(isEditable, index)}
+          setInputState={setInputState}
         />
       ))}
       <>
-        {(!maxInputs || inputs.length < maxInputs) && !editStates.includes(true) && (
+        {(!maxInputs || inputs.length < maxInputs) && inputState === 'CONFIRMED' && (
           <Button onClick={addInput}>Add {placeholder}</Button>
         )}
       </>
