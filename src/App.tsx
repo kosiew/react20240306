@@ -22,11 +22,11 @@ function App() {
       <h2>A really fast and easy tool to make decisions</h2>
 
       <InputCollector placeholder="Question" maxInputs={1} onInputsChange={setQuestions} />
-      <div>
-        <InputCollector placeholder="Choice" onInputsChange={setChoices} />
-
-      </div>
-
+      {questions.length > 0 && questions.every(question => question.length > 0) && (
+        <div>
+          <InputCollector placeholder="Choice" onInputsChange={setChoices} />
+        </div>
+      )}
       <footer style={{
         position: 'fixed', left: 0,
         bottom: 0, width: '100%', backgroundColor: 'white',
