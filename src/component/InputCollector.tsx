@@ -1,18 +1,19 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
+import { InputState } from '../App';
 import { TextInput } from './TextInput';
 
 interface InputCollectorProps {
   placeholder: string;
   maxInputs?: number;
   onInputsChange: (newInputs: string[]) => void;
+  setInputState: (newState: InputState) => void;
+  inputState: InputState;
 }
 
-export type InputState = 'ENTERING' | 'CONFIRMED' | 'INITIAL'
-export const InputCollector: React.FC<InputCollectorProps> = ({ placeholder, maxInputs, onInputsChange }) => {
+export const InputCollector: React.FC<InputCollectorProps> = ({ placeholder, inputState, setInputState, maxInputs, onInputsChange }) => {
   const [inputs, setInputs] = useState<string[]>(['']);
 
-  const [inputState, setInputState] = useState<InputState>('INITIAL');
   const handleInputChange = (newValue: string, index: number) => {
     const newInputs = [...inputs];
     newInputs[index] = newValue;
