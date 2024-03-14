@@ -47,6 +47,7 @@ export const TextInput: React.FC<Props> = ({ placeHolder, onInputChange, onDelet
             onKeyPress={handleKeyPress}
             onBlur={handleIconClick}
             placeholder={placeHolder}
+            autoFocus
             InputProps={{
               endAdornment: (
                 <IconButton onClick={handleIconClick}>
