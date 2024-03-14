@@ -7,7 +7,7 @@ import { HeadScript } from './component/HeadScript';
 import { InputCollector } from './component/InputCollector';
 import { LoadingText } from './component/LoadingText';
 import logo from './logo_beventure.png';
-
+import star from './star.png';
 
 type ShowAnswer = 'LOADING' | 'READY' | 'HIDDEN';
 const WAIT_SECONDS = 5
@@ -55,22 +55,27 @@ function App() {
           <img src={logo} alt="logo" style={{ width: "500px" }} />
         </div>
       </AppBar>
-      <h2>A really fast and easy tool to make decisions</h2>
-
-      <InputCollector placeholder="Question" maxInputs={1} onInputsChange={setQuestions} />
-      <ChoiceSection
-        gotQuestion={gotQuestion}
-        showAnswer={showAnswer}
-        showGetAnswer={showGetAnswer}
-        handleGetAnswer={handleGetAnswer}
-        setChoices={setChoices}
-      />
-      {showAnswer === 'LOADING' && (
-        <LoadingText items={choices} interval={200} />
-      )}
-      {showAnswer === 'READY' && (
-        <AnswerSection answer={answer} handleAskAnotherQuestion={handleAskAnotherQuestion} />
-      )}
+      <div style={{
+        backgroundImage: `url(${star})`,
+        backgroundSize: 'auto',
+        backgroundRepeat: 'no-repeat'
+      }}>
+        <h2>A really fast and easy tool to make decisions</h2>
+        <InputCollector placeholder="Question" maxInputs={1} onInputsChange={setQuestions} />
+        <ChoiceSection
+          gotQuestion={gotQuestion}
+          showAnswer={showAnswer}
+          showGetAnswer={showGetAnswer}
+          handleGetAnswer={handleGetAnswer}
+          setChoices={setChoices}
+        />
+        {showAnswer === 'LOADING' && (
+          <LoadingText items={choices} interval={200} />
+        )}
+        {showAnswer === 'READY' && (
+          <AnswerSection answer={answer} handleAskAnotherQuestion={handleAskAnotherQuestion} />
+        )}
+      </div>
       <footer style={{
         position: 'fixed', left: 0,
         bottom: 0, width: '100%', backgroundColor: 'white',
