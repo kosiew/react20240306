@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import { useState } from "react";
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { InputState } from '../App';
+import { InputState } from './InputCollector';
 interface Props {
   placeHolder: string;
   onInputChange: (newValue: string) => void;
