@@ -1,12 +1,15 @@
-import { Button } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import { useState } from 'react';
 import './App.css';
+import { AnswerSection } from './component/AnswerSection';
+import { ChoiceSection } from './component/ChoiceSection';
 import { InputCollector } from './component/InputCollector';
+import { LoadingText } from './component/LoadingText';
 import logo from './logo_beventure.png';
 
 
 type ShowAnswer = 'LOADING' | 'READY' | 'HIDDEN';
+const WAIT_SECONDS = 5
 function App() {
   const [questions, setQuestions] = useState<string[]>([]);
   const [choices, setChoices] = useState<string[]>([]);
@@ -16,6 +19,13 @@ function App() {
   const gotQuestion = questions.length > 0 && questions.every(question => question.length > 0)
   const gotChoices = choices.length > 1 && choices.every(choice => choice.length > 0)
   const showGetAnswer = gotQuestion && gotChoices;
+
+  const handleAskAnotherQuestion = () => {
+    // setQuestions([]);
+    setChoices([]);
+    setAnswer('');
+    setShowAnswer('HIDDEN');
+  }
 
   const handleGetAnswer = () => {
     // Handle the "Get Answer" button click
@@ -29,7 +39,10 @@ function App() {
     ]
     const randomIndex = Math.floor(Math.random() * _choices.length);
     setShowAnswer('LOADING');
-    setAnswer(_choices[randomIndex]);
+    setTimeout(() => {
+      setAnswer(_choices[randomIndex]);
+      setShowAnswer('READY');
+    }, WAIT_SECONDS * 1000);
   }
 
   return (
@@ -43,17 +56,19 @@ function App() {
       <h2>A really fast and easy tool to make decisions</h2>
 
       <InputCollector placeholder="Question" maxInputs={1} onInputsChange={setQuestions} />
-      {gotQuestion && showAnswer === 'HIDDEN' && (
-        <div>
-          <InputCollector placeholder="Choice" onInputsChange={setChoices} />
-        </div>
+      <ChoiceSection
+        gotQuestion={gotQuestion}
+        showAnswer={showAnswer}
+        showGetAnswer={showGetAnswer}
+        handleGetAnswer={handleGetAnswer}
+        setChoices={setChoices}
+      />
+      {showAnswer === 'LOADING' && (
+        <LoadingText items={choices} interval={200} />
       )}
-
-      {showGetAnswer && showAnswer === 'HIDDEN' && (
-        <Button variant="contained" onClick={handleGetAnswer}>Get Answer Now</Button>)}
-
-
-
+      {showAnswer === 'READY' && (
+        <AnswerSection answer={answer} handleAskAnotherQuestion={handleAskAnotherQuestion} />
+      )}
       <footer style={{
         position: 'fixed', left: 0,
         bottom: 0, width: '100%', backgroundColor: 'white',
