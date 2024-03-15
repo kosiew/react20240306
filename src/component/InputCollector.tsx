@@ -43,9 +43,11 @@ export const InputCollector: React.FC<InputCollectorProps> = ({ placeholder, max
       {inputs.map((input, index) => (
         <TextInput
           key={index}
-          placeHolder={`${placeholder} ${index + 1}`}
+          placeHolder={`${placeholder}${maxInputs === 1 ? ''
+            : ` ${index + 1}`}`}
           onInputChange={(newValue) => handleInputChange(newValue, index)}
-          onDelete={inputs.length > 1 ? () => deleteInput(index) : undefined}
+          onDelete={inputs.length > 1 ? () => deleteInput(index)
+            : undefined}
           setInputState={setInputState}
         />
       ))}
